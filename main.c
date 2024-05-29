@@ -16,17 +16,24 @@ int main (void) {
 	printf("\nBienvenido al juego de la vida de Conway. El tablero tendrá %d filas y %d columnas.\n\n", ROW, COL);
 	printf("Ingrese el estado inicial que desee.\nLos 0 y los espacios serán tomados como muertas.\nCualquier otro valor sera considerado vivo. Ingrese los caracteres sin espacios entremedio.\n(Si ingresa caracteres de mas se ignoraran; si ingresa de menos quedaran muertas)\n");		
 	
-	get_board(board[0]);
+	int current = 0; // Index of the current board
+	get_board(board[current]); // Every board/matrix functions should be used like this
 	
+	// Getting initial Conway board from user
 	printf("\n\nEstado inicial:\n");
 	board_printer(board[0]);
 	printf("\n\n");
 
+
 	int input;
+	
 	do {
-		printf("Seleccione cuantas generaciones avanzar (puede avanzar una generacion presionando enter o puede finalizar el programa ingresando 'q'): ");
+		// Getting number of generations from user
+		printf("Seleccione cuantas generaciones avanzar (puede avanzar una generacion "
+		"presionando enter o puede finalizar el programa ingresando 'q'): ");
 		input = get_input();
 		
+		// Filtering error cases
 		switch(input) {
 			case 0:
 			case ERR_INPUT:
@@ -38,19 +45,16 @@ int main (void) {
 			case END_PROG:
 				printf("Programa finalizado. ¡Gracias por jugar!\n");
 				break;
+				
+			// Updating and printing Conway board
 			default:
 				int i;
-				int current = 0;
 				for(i = 0; i < input; i++) {
 					new_board(board[current], board[!current]);
 					current = !current;
 				}
-				printf("\n\nTablero en %d ", input);
-				if (input == 1){
-					printf("generacion: \n\n");
-				} else {
-					printf("generaciones: \n\n");
-				}
+				
+				printf("\n\nTablero en %d generacion%s: \n\n", input, 1==input ? "es" : "");
 				board_printer(board[current]);
 				printf("\n");
 		}
