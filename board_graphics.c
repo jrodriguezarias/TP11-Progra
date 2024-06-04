@@ -1,20 +1,23 @@
 #include "board_graphics.h"
 
+
 void board_printer(int board[ROW+2][COL+2]) {
 
+	al_clear_to_color(al_color_name("black"));
 	for (int i = 1; i < ROW+1; i++) { // Goes through each row
-
 		for (int j = 1; j < COL+1; j++) { // Goes through each element
-			printf("| %c ", board[i][j] ? 'X' : ' ');
+			if(board[i][j]){
+				//printf("entre");
+				al_draw_filled_rectangle(j*DISPLAY_X/COL, i*DISPLAY_Y/ROW, (j+1)*DISPLAY_X/COL, (i+1)*DISPLAY_X/ROW, al_color_name("white"));
+			}
+			printf("entre");
 		}
-
-		printf("|\n"); // "Closes" the row
 
 	}
 
+	al_flip_display();
+
 }
-
-
 
 void get_board(int board[ROW+2][COL+2]) {
     
